@@ -50,6 +50,13 @@
 @class SVGKImage; // needed for typedef below
 typedef void (^SVGKImageAsynchronousLoadingDelegate)(SVGKImage* loadedImage, SVGKParseResult* parseResult );
 
+@protocol SVGKImageFillDelegate <NSObject>
+
+- (BOOL)svgImage:(SVGKImage *)img shouldFillPathWithUUID:(NSString *)uuid;
+- (UIColor *)svgImage:(SVGKImage *)img fillColorForUUID:(NSString *)uuid;
+
+@end
+
 @interface SVGKImage : NSObject // doesn't extend UIImage because Apple made UIImage immutable
 {
 #if ENABLE_GLOBAL_IMAGE_CACHE_FOR_SVGKIMAGE_IMAGE_NAMED
@@ -57,11 +64,15 @@ typedef void (^SVGKImageAsynchronousLoadingDelegate)(SVGKImage* loadedImage, SVG
 #endif
 }
 
+- (void)clearCachedLayers;
+
 /** Generates an image on the fly
  
  NB you can get MUCH BETTER performance using the methods such as exportUIImageAntiAliased and exportNSDataAntiAliased
  */
 @property (weak, nonatomic, readonly) UIImage* UIImage;
+
+@property (weak, nonatomic) id<SVGKImageFillDelegate> fillDelegate;
 
 @property (nonatomic, strong, readonly) SVGKSource* source;
 @property (nonatomic, strong, readonly) SVGKParseResult* parseErrorsAndWarnings;

@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "CAShapeLayerWithClipRender.h"
 
@@ -18,7 +19,8 @@
  * TODO: should this layer be used in SVGEllipseElement, SVGPolygonElement, etc?
  */
 @interface CAShapeLayerWithHitTest : CAShapeLayerWithClipRender {
-    
 }
+
+//@property (nonatomic, copy) NSString *uuid;
 
 @end

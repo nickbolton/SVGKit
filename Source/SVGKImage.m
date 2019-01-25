@@ -9,6 +9,9 @@
 #import "SVGClipPathElement.h"
 #import "SVGSwitchElement.h"
 #import "NodeList+Mutable.h"
+#import "CAShapeLayerWithHitTest.h"
+#import "CALayerWithChildHitTest.h"
+#import "CAShapeLayer+CAShapeLayer_Additions.h"
 
 #import "SVGSVGElement_Mutable.h" // so that changing .size can change the SVG's .viewport
 
@@ -631,7 +634,6 @@ static NSMutableDictionary* globalSVGKImageCache;
 - (CALayer *)newLayerWithElement:(SVGElement <ConverterSVGToCALayer> *)element
 {
 	CALayer *layer = [element newLayer];
-	
 	layer.hidden = ![self isElementVisible:element];
 	
 	//DEBUG: SVGKitLogVerbose(@"[%@] DEBUG: converted SVG element (class:%@) to CALayer (class:%@ frame:%@ pointer:%@) for id = %@", [self class], NSStringFromClass([element class]), NSStringFromClass([layer class]), NSStringFromCGRect( layer.frame ), layer, element.identifier);
@@ -720,6 +722,24 @@ static NSMutableDictionary* globalSVGKImageCache;
 			
 			sublayerCount++;
 			[layer addSublayer:sublayer];
+            
+            CAShapeLayer *shapeLayer = sublayer;
+            
+            if ([shapeLayer isKindOfClass:[CALayerWithChildHitTest class]]) {
+            }
+            
+            if ([shapeLayer isKindOfClass:[CAShapeLayer class]]) {
+                if ([self.fillDelegate svgImage:self shouldFillPathWithUUID:shapeLayer.svgk_uuid]) {
+                    UIColor *fillColor = [self.fillDelegate svgImage:self fillColorForUUID:shapeLayer.svgk_uuid];
+                    shapeLayer.fillColor = fillColor.CGColor;
+//                    CAShapeLayer *fillLayer = [CAShapeLayerWithHitTest new];
+//                    fillLayer.svgk_uuid = [NSString stringWithFormat:@"%@-fill", shapeLayer.svgk_uuid];
+//                    fillLayer.path = shapeLayer.path;
+//                    fillLayer.fillColor = fillColor.CGColor;
+//                    fillLayer.frame = sublayer.frame;
+//                    [layer addSublayer:fillLayer];
+                }
+            }
 		}
 	}
 	
@@ -760,7 +780,6 @@ static NSMutableDictionary* globalSVGKImageCache;
 	 */
 	[element layoutLayer:layer];
     [layer setNeedsDisplay];
-	
 	return layer;
 }
 
@@ -787,6 +806,10 @@ static NSMutableDictionary* globalSVGKImageCache;
 		
 		return newLayerTree;
 	}
+}
+
+- (void)clearCachedLayers {
+    self.CALayerTree = nil;
 }
 
 -(CALayer *)CALayerTree

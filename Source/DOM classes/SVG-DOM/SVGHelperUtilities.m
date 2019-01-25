@@ -8,6 +8,8 @@
 #import "SVGTransformable.h"
 #import "SVGSVGElement.h"
 #import "SVGGradientLayer.h"
+#import "SVGKImage.h"
+#import "CAShapeLayer+CAShapeLayer_Additions.h"
 
 @implementation SVGHelperUtilities
 
@@ -285,6 +287,8 @@
 
 +(void) configureCALayer:(CALayer*) layer usingElement:(SVGElement*) nonStylableElement
 {
+//    NSString *uuid = [nonStylableElement hasAttribute:@"uuid"] ? [nonStylableElement getAttribute:@"uuid"] : @"";
+//    layer.svgk_uuid = uuid;
 	layer.name = nonStylableElement.identifier;
 	[layer setValue:nonStylableElement.identifier forKey:kSVGElementIdentifier];
 	
@@ -317,7 +321,9 @@
 
 +(CALayer *) newCALayerForPathBasedSVGElement:(SVGElement<SVGTransformable>*) svgElement withPath:(CGPathRef) pathRelative
 {
-	CAShapeLayer* _shapeLayer = [CAShapeLayerWithHitTest layer];
+    NSString *uuid = [svgElement hasAttribute:@"uuid"] ? [svgElement getAttribute:@"uuid"] : @"";
+	CAShapeLayerWithHitTest* _shapeLayer = [CAShapeLayerWithHitTest layer];
+    _shapeLayer.svgk_uuid = uuid;
 	
 	[self configureCALayer:_shapeLayer usingElement:svgElement];
 	

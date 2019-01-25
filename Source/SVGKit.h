@@ -74,6 +74,8 @@ FOUNDATION_EXPORT const unsigned char SVGKitFramework_VersionString[];
 #import "Text.h"
 #import "DOMGlobalSettings.h"
 
+#import "CAShapeLayer+CAShapeLayer_Additions.h"
+
 // SVG DOM
 #import "SVGAngle.h"
 #import "SVGAnimatedPreserveAspectRatio.h"
