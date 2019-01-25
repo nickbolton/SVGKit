@@ -732,12 +732,6 @@ static NSMutableDictionary* globalSVGKImageCache;
                 if ([self.fillDelegate svgImage:self shouldFillPathWithUUID:shapeLayer.svgk_uuid]) {
                     UIColor *fillColor = [self.fillDelegate svgImage:self fillColorForUUID:shapeLayer.svgk_uuid];
                     shapeLayer.fillColor = fillColor.CGColor;
-//                    CAShapeLayer *fillLayer = [CAShapeLayerWithHitTest new];
-//                    fillLayer.svgk_uuid = [NSString stringWithFormat:@"%@-fill", shapeLayer.svgk_uuid];
-//                    fillLayer.path = shapeLayer.path;
-//                    fillLayer.fillColor = fillColor.CGColor;
-//                    fillLayer.frame = sublayer.frame;
-//                    [layer addSublayer:fillLayer];
                 }
             }
 		}
