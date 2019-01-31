@@ -729,9 +729,23 @@ static NSMutableDictionary* globalSVGKImageCache;
             }
             
             if ([shapeLayer isKindOfClass:[CAShapeLayer class]]) {
-                if ([self.fillDelegate svgImage:self shouldFillPathWithUUID:shapeLayer.svgk_uuid]) {
-                    UIColor *fillColor = [self.fillDelegate svgImage:self fillColorForUUID:shapeLayer.svgk_uuid];
+                if ([self.drawingDelegate svgImage:self hasFillPathWithUUID:shapeLayer.svgk_uuid]) {
+                    UIColor *fillColor = [self.drawingDelegate svgImage:self fillColorForUUID:shapeLayer.svgk_uuid];
                     shapeLayer.fillColor = fillColor.CGColor;
+                } else {
+//                    NSArray<SVGLineDescriptor *> *lineDescriptors = [self.drawingDelegate svgImage:self lineDescriptorsForUUID:shapeLayer.svgk_uuid];
+//                    for (SVGLineDescriptor *desc in lineDescriptors) {
+//                        UIBezierPath *path = [UIBezierPath new];
+//                        [path moveToPoint:desc.startPoint];
+//                        [path addLineToPoint:desc.endPoint];
+//                        path.lineWidth = desc.lineWidth;
+//                        CAShapeLayer *shape = [CAShapeLayer layer];
+//                        shape.path = path.CGPath;
+//                        shape.strokeColor = desc.color.CGColor;
+//                        shape.lineWidth = desc.lineWidth;
+//                        shape.frame = shapeLayer.bounds;
+//                        [shapeLayer addSublayer:shape];
+//                    }
                 }
             }
 		}
@@ -892,3 +906,11 @@ static NSMutableDictionary* globalSVGKImageCache;
 
 @end
 
+
+@implementation SVGLineDescriptor
+@synthesize lineWidth;
+@synthesize startPoint;
+@synthesize endPoint;
+@synthesize color;
+@end
+                            

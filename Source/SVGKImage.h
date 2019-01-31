@@ -47,13 +47,25 @@
 
 @class SVGDefsElement;
 
+@class SVGLineDescriptor;
+
 @class SVGKImage; // needed for typedef below
 typedef void (^SVGKImageAsynchronousLoadingDelegate)(SVGKImage* loadedImage, SVGKParseResult* parseResult );
 
-@protocol SVGKImageFillDelegate <NSObject>
+@protocol SVGKImageDrawingDelegate <NSObject>
 
-- (BOOL)svgImage:(SVGKImage *)img shouldFillPathWithUUID:(NSString *)uuid;
+- (BOOL)svgImage:(SVGKImage *)img hasFillPathWithUUID:(NSString *)uuid;
 - (UIColor *)svgImage:(SVGKImage *)img fillColorForUUID:(NSString *)uuid;
+
+- (NSArray<SVGLineDescriptor *> *)svgImage:(SVGKImage *)img lineDescriptorsForUUID:(NSString *)uuid;
+
+@end
+
+@interface SVGLineDescriptor : NSObject
+@property (nonatomic) CGFloat lineWidth;
+@property (nonatomic) CGPoint startPoint;
+@property (nonatomic) CGPoint endPoint;
+@property (nonatomic, strong) UIColor *color;
 
 @end
 
@@ -72,7 +84,7 @@ typedef void (^SVGKImageAsynchronousLoadingDelegate)(SVGKImage* loadedImage, SVG
  */
 @property (weak, nonatomic, readonly) UIImage* UIImage;
 
-@property (weak, nonatomic) id<SVGKImageFillDelegate> fillDelegate;
+@property (weak, nonatomic) id<SVGKImageDrawingDelegate> drawingDelegate;
 
 @property (nonatomic, strong, readonly) SVGKSource* source;
 @property (nonatomic, strong, readonly) SVGKParseResult* parseErrorsAndWarnings;

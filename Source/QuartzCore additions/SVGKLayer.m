@@ -26,8 +26,9 @@
 }
 - (void)setSVGImage:(SVGKImage *)newImage
 {
-	if( newImage == _SVGImage )
+    if( newImage == _SVGImage ) {
 		return;
+    }
 	
 	self.startRenderTime = self.endRenderTime = nil; // set to nil, so that watchers know it hasn't loaded yet
 	

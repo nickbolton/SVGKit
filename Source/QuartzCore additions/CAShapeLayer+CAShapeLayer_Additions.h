@@ -10,5 +10,6 @@
 @interface CAShapeLayer (CAShapeLayer_Additions)
 
 @property (nonatomic, copy, setter = svgk_setUuid:) NSString *svgk_uuid;
+@property (nonatomic, copy, setter = svgk_setFillColor:) UIColor *svgk_fillColor;
 
 @end
