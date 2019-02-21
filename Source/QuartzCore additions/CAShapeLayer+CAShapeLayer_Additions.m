@@ -18,12 +18,4 @@
     objc_setAssociatedObject(self, @selector(svgk_uuid), uuid, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (UIColor *)svgk_fillColor {
-    return (UIColor *)objc_getAssociatedObject(self, @selector(svgk_fillColor));
-}
-
-- (void)svgk_setFillColor:(UIColor *)color {
-    objc_setAssociatedObject(self, @selector(svgk_fillColor), color, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
 @end

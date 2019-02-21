@@ -530,10 +530,6 @@
 		fillLayer.fillColor = [self parseFillForElement:svgElement fromFill:actualFill andOpacity:actualFillOpacity];
 	}
     
-    if (fillLayer.fillColor != nil) {
-        _shapeLayer.svgk_fillColor = [UIColor colorWithCGColor:fillLayer.fillColor];
-    }
-
 	CGPathRelease(pathToPlaceInLayer);
 	
 	NSString* actualOpacity = [svgElement cascadedValueForStylableProperty:@"opacity" inherit:NO];
