@@ -32,11 +32,14 @@
 	
 	self.startRenderTime = self.endRenderTime = nil; // set to nil, so that watchers know it hasn't loaded yet
 	
-	/** 1: remove old */
-	if( _SVGImage != nil )
-	{
-		[_SVGImage.CALayerTree removeFromSuperlayer];
-	}
+    /** 1: remove old */
+    for (CALayer *sublayer in [self.sublayers copy]) {
+        [sublayer removeFromSuperlayer];
+    }
+//    if( _SVGImage != nil )
+//    {
+//        [_SVGImage.CALayerTree removeFromSuperlayer];
+//    }
 	
 	/** 2: update pointer */
 	_SVGImage = newImage;

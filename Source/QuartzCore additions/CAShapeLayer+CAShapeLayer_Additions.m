@@ -18,4 +18,12 @@
     objc_setAssociatedObject(self, @selector(svgk_uuid), uuid, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
+- (BOOL)svgk_isFillable {
+    return ((NSNumber *)objc_getAssociatedObject(self, @selector(svgk_isFillable))).boolValue;
+}
+
+- (void)svgk_setFillable:(BOOL)value {
+    objc_setAssociatedObject(self, @selector(svgk_isFillable), [NSNumber numberWithBool:value], OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
 @end

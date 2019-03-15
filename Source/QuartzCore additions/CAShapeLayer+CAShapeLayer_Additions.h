@@ -10,5 +10,6 @@
 @interface CAShapeLayer (CAShapeLayer_Additions)
 
 @property (nonatomic, copy, setter = svgk_setUuid:) NSString *svgk_uuid;
+@property (nonatomic, setter = svgk_setFillable:) BOOL svgk_isFillable;
 
 @end

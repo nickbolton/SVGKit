@@ -46,6 +46,7 @@
 @property (nonatomic, strong, readwrite) SVGKParseResult* parseErrorsAndWarnings;
 
 @property (nonatomic, strong, readwrite) SVGKSource* source;
+@property (nonatomic, strong, readwrite) NSData* data;
 
 @property (nonatomic, strong, readwrite) SVGDocument* DOMDocument;
 @property (nonatomic, strong, readwrite) SVGSVGElement* DOMTree; // needs renaming + (possibly) replacing by DOMDocument
@@ -342,7 +343,11 @@ static NSMutableDictionary* globalSVGKImageCache;
 	
 	SVGKitLogWarn(@"Creating an SVG from raw data; this is not recommended: SVG requires knowledge of at least the URL where it came from (as it can contain relative file-links internally). You should use the method [SVGKImage initWithSource:] instead and specify an SVGKSource with more detail" );
 	
-	return [self initWithSource:[SVGKSourceNSData sourceFromData:data URLForRelativeLinks:nil]];
+	self =  [self initWithSource:[SVGKSourceNSData sourceFromData:data URLForRelativeLinks:nil]];
+    if (self != nil) {
+        self.data = data;
+    }
+    return self;
 }
 
 - (void)dealloc

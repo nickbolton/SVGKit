@@ -322,8 +322,10 @@
 +(CALayer *) newCALayerForPathBasedSVGElement:(SVGElement<SVGTransformable>*) svgElement withPath:(CGPathRef) pathRelative
 {
     NSString *uuid = [svgElement hasAttribute:@"uuid"] ? [svgElement getAttribute:@"uuid"] : @"";
+    BOOL isFillable = [svgElement hasAttribute:@"fillable"] ? [[svgElement getAttribute:@"fillable"] boolValue] : false;
 	CAShapeLayerWithHitTest* _shapeLayer = [CAShapeLayerWithHitTest layer];
     _shapeLayer.svgk_uuid = uuid;
+    _shapeLayer.svgk_isFillable = isFillable;
 	
 	[self configureCALayer:_shapeLayer usingElement:svgElement];
 	

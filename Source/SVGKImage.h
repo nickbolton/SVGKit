@@ -87,6 +87,7 @@ typedef void (^SVGKImageAsynchronousLoadingDelegate)(SVGKImage* loadedImage, SVG
 @property (weak, nonatomic) id<SVGKImageDrawingDelegate> drawingDelegate;
 
 @property (nonatomic, strong, readonly) SVGKSource* source;
+@property (nonatomic, strong, readonly) NSData* data;
 @property (nonatomic, strong, readonly) SVGKParseResult* parseErrorsAndWarnings;
 
 @property (nonatomic, strong, readonly) SVGDocument* DOMDocument;
