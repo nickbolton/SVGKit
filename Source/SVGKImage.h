@@ -335,4 +335,6 @@ typedef void (^SVGKImageAsynchronousLoadingDelegate)(SVGKImage* loadedImage, SVG
 /** alters the SVG image's size directly (by changing the viewport) so that it will fit inside the specifed area without stretching or deforming */
 -(void) scaleToFitInside:(CGSize) maxSize;
 
+- (UIImage *)uiImageAtSize:(CGSize)size scale:(CGFloat)scale;
+
 @end
