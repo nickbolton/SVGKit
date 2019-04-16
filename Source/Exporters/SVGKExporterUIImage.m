@@ -6,20 +6,30 @@
 
 +(UIImage*) exportAsUIImage:(SVGKImage *)image
 {
-    return [self exportAsUIImage:image size:image.size scale:[UIScreen mainScreen].scale antiAliased:TRUE curveFlatnessFactor:1.0 interpolationQuality:kCGInterpolationDefault];
+	return [self exportAsUIImage:image antiAliased:TRUE curveFlatnessFactor:1.0 interpolationQuality:kCGInterpolationDefault];
 }
 
-+(UIImage*) exportAsUIImage:(SVGKImage*) image size:(CGSize)size scale:(CGFloat)scale antiAliased:(BOOL) shouldAntialias curveFlatnessFactor:(CGFloat) multiplyFlatness interpolationQuality:(CGInterpolationQuality) interpolationQuality
++(UIImage*) exportAsUIImage:(SVGKImage*) image antiAliased:(BOOL) shouldAntialias curveFlatnessFactor:(CGFloat) multiplyFlatness interpolationQuality:(CGInterpolationQuality) interpolationQuality
+{
+    return [self exportAsUIImage:image scale:1.0 antiAliased:shouldAntialias curveFlatnessFactor:multiplyFlatness interpolationQuality:interpolationQuality];
+}
+
++(UIImage*) exportAsUIImage:(SVGKImage*) image scale:(CGFloat)scale antiAliased:(BOOL) shouldAntialias curveFlatnessFactor:(CGFloat) multiplyFlatness interpolationQuality:(CGInterpolationQuality) interpolationQuality
 {
 	if( [image hasSize] )
 	{
-		UIGraphicsBeginImageContextWithOptions( size, FALSE, scale );
+		SVGKitLogVerbose(@"[%@] DEBUG: Generating a UIImage using the current root-object's viewport (may have been overridden by user code): {0,0,%2.3f,%2.3f}", [self class], image.size.width, image.size.height);
+		
+        CGSize size = CGSizeMake(image.size.width * scale, image.size.height * scale);
+		UIGraphicsBeginImageContextWithOptions( size, FALSE, [UIScreen mainScreen].scale );
 		CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextScaleCTM(context, scale, scale);
 		
 		[image renderToContext:context antiAliased:shouldAntialias curveFlatnessFactor:multiplyFlatness interpolationQuality:interpolationQuality flipYaxis:FALSE];
 		
 		UIImage* result = UIGraphicsGetImageFromCurrentImageContext();
 		UIGraphicsEndImageContext();
+		
 		
 		return result;
 	}

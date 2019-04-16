@@ -489,15 +489,15 @@ static NSMutableDictionary* globalSVGKImageCache;
 #if SVGKIT_MAC
 	return [SVGKExporterNSImage exportAsNSImage:self antiAliased:TRUE curveFlatnessFactor:1.0f interpolationQuality:kCGInterpolationDefault]; // Apple defaults
 #else
-    return [SVGKExporterUIImage exportAsUIImage:self size:self.size scale:[UIScreen mainScreen].scale antiAliased:TRUE curveFlatnessFactor:1.0f interpolationQuality:kCGInterpolationDefault]; // Apple defaults
+    return [SVGKExporterUIImage exportAsUIImage:self antiAliased:TRUE curveFlatnessFactor:1.0f interpolationQuality:kCGInterpolationDefault]; // Apple defaults
 #endif
 }
 
-- (UIImage *)uiImageAtSize:(CGSize)size scale:(CGFloat)scale {
+- (UIImage *)highResUIImageAtScale:(CGFloat)scale {
 #if SVGKIT_MAC
-    return [SVGKExporterNSImage exportAsNSImage:self antiAliased:TRUE curveFlatnessFactor:1.0f interpolationQuality:kCGInterpolationDefault]; // Apple defaults
+    return [SVGKExporterNSImage exportAsNSImage:self scale:scale antiAliased:TRUE curveFlatnessFactor:0.0f interpolationQuality:kCGInterpolationHigh]; // Apple defaults
 #else
-    return [SVGKExporterUIImage exportAsUIImage:self size:size scale:scale antiAliased:TRUE curveFlatnessFactor:1.0f interpolationQuality:kCGInterpolationDefault]; // Apple defaults
+    return [SVGKExporterUIImage exportAsUIImage:self scale:scale antiAliased:TRUE curveFlatnessFactor:0.0f interpolationQuality:kCGInterpolationHigh]; // Apple defaults
 #endif
 }
 
