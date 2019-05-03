@@ -738,9 +738,6 @@ static NSMutableDictionary* globalSVGKImageCache;
             
             CAShapeLayer *shapeLayer = sublayer;
             
-            if ([shapeLayer isKindOfClass:[CALayerWithChildHitTest class]]) {
-            }
-            
             if ([shapeLayer isKindOfClass:[CAShapeLayer class]]) {
                 if ([self.drawingDelegate svgImage:self hasFillPathWithUUID:shapeLayer.svgk_uuid]) {
                     UIColor *fillColor = [self.drawingDelegate svgImage:self fillColorForUUID:shapeLayer.svgk_uuid];
